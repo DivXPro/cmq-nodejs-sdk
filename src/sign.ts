@@ -9,7 +9,7 @@ export class Signature {
   ) {
     const url = `${host}${path}`;
     const paramStr = this.makeParamStr(params);
-    return `${method}${url}${paramStr}`;
+    return `${method}${url.replace(/^https:\/\//i, '')}${paramStr}`;
   }
 
   public static sign(text: string, secretKey: string, signMethod = 'HmacSHA1') {
@@ -42,7 +42,7 @@ export class Signature {
       paramsKeys.push(key);
     }
     paramsKeys = paramsKeys.sort();
-    for (let key in paramsKeys) {
+    for (let key of paramsKeys) {
       if (key === 'Signature') {
         continue;
       }

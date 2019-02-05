@@ -5,7 +5,7 @@ class Signature {
     static makeSignPlainText(params, method = 'POST', host, path) {
         const url = `${host}${path}`;
         const paramStr = this.makeParamStr(params);
-        return `${method}${url}${paramStr}`;
+        return `${method}${url.replace(/^https:\/\//i, '')}${paramStr}`;
     }
     static sign(text, secretKey, signMethod = 'HmacSHA1') {
         let signer;
@@ -36,7 +36,7 @@ class Signature {
             paramsKeys.push(key);
         }
         paramsKeys = paramsKeys.sort();
-        for (let key in paramsKeys) {
+        for (let key of paramsKeys) {
             if (key === 'Signature') {
                 continue;
             }
