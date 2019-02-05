@@ -1,3 +1,4 @@
+import * as querystring from 'querystring';
 import AxiosStatic, { AxiosInstance } from 'axios';
 import { Signature } from './sign';
 import { QueueMeta } from './queue';
@@ -55,7 +56,7 @@ export class CMQClient {
   protected async request(action: string, params: any) {
     params = this.buildParams(action, params, 'POST', this.host, PATH);
 
-    const resp = await this.http.post(PATH, params);
+    const resp = await this.http.post(PATH, querystring.stringify(params));
     if (resp.status !== 200) {
       throw new Error(`request ${params} fail: ${resp.status}`);
     }
@@ -70,8 +71,8 @@ export class CMQClient {
     params['Action'] = action;
     params['RequestClient'] = this.version;
     params['SecretId'] = this.secretId;
-    params['Nonce'] = Math.random();
-    params['Timestamp'] = new Date().getTime();
+    params['Nonce'] = Math.round(Math.random() * Math.pow(10, 5));
+    params['Timestamp'] = Math.round(new Date().getTime() / 1000);
     params['SignatureMethod'] = this.SignatureMethod;
     // 添加签名
     const plainText = Signature.makeSignPlainText(params, method, host, path);

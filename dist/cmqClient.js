@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const querystring = require("querystring");
 const axios_1 = require("axios");
 const sign_1 = require("./sign");
 const PATH = '/v2/index.php';
@@ -47,7 +48,7 @@ class CMQClient {
     request(action, params) {
         return __awaiter(this, void 0, void 0, function* () {
             params = this.buildParams(action, params, 'POST', this.host, PATH);
-            const resp = yield this.http.post(PATH, params);
+            const resp = yield this.http.post(PATH, querystring.stringify(params));
             if (resp.status !== 200) {
                 throw new Error(`request ${params} fail: ${resp.status}`);
             }
@@ -62,8 +63,8 @@ class CMQClient {
         params['Action'] = action;
         params['RequestClient'] = this.version;
         params['SecretId'] = this.secretId;
-        params['Nonce'] = Math.random();
-        params['Timestamp'] = new Date().getTime();
+        params['Nonce'] = Math.round(Math.random() * Math.pow(10, 5));
+        params['Timestamp'] = Math.round(new Date().getTime() / 1000);
         params['SignatureMethod'] = this.SignatureMethod;
         const plainText = sign_1.Signature.makeSignPlainText(params, method, host, path);
         params['Signature'] = sign_1.Signature.sign(plainText, this.secretKey, this.SignatureMethod);

@@ -8,23 +8,19 @@ class Signature {
         return `${method}${url}${paramStr}`;
     }
     static sign(text, secretKey, signMethod = 'HmacSHA1') {
-        let signature;
         let signer;
         switch (signMethod) {
             case 'HmacSHA1':
-                signer = crypto.createSign('SHA1');
-                signer.update(text);
-                signature = new Buffer(signer.sign(secretKey)).toString('base64');
+                signer = crypto.createHmac('sha1', secretKey);
                 break;
             case 'HmacSHA256':
-                signer = crypto.createSign('SHA256');
-                signer.update(text);
-                signature = new Buffer(signer.sign(secretKey)).toString('base64');
+                signer = crypto.createHmac('SHA256', secretKey);
                 break;
             default:
                 throw new Error(`${signMethod} is not a supported encrypt method`);
         }
-        return signature;
+        signer.update(text);
+        return signer.digest('base64');
     }
     static makeParamStr(params, method = 'POST') {
         let paramStr = '';
