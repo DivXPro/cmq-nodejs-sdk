@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const sign_1 = require("./sign");
-const PATH = 'v2/index.php';
+const PATH = '/v2/index.php';
 const SEND_MESSAGE = 'SendMessage';
 const RECEIVE_MESSAGE = 'ReceiveMessage';
 const DELETE_MESSAGE = 'DeleteMessage';

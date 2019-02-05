@@ -2,7 +2,7 @@ import AxiosStatic, { AxiosInstance } from 'axios';
 import { Signature } from './sign';
 import { QueueMeta } from './queue';
 
-const PATH = 'v2/index.php';
+const PATH = '/v2/index.php';
 const SEND_MESSAGE = 'SendMessage';
 const RECEIVE_MESSAGE = 'ReceiveMessage';
 const DELETE_MESSAGE = 'DeleteMessage';

@@ -45,7 +45,7 @@ class Signature {
             else {
                 paramStr = `${paramStr}&`;
             }
-            paramStr = `${paramStr}=${params[key]}`;
+            paramStr = `${paramStr}${key}=${params[key]}`;
             idx += 1;
         }
         return paramStr;
