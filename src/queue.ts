@@ -1,0 +1,57 @@
+import { CMQClient } from './cmqClient';
+
+export interface QueueMeta {
+  pollingWaitSeconds?: number;
+  visibilityTimeout?: number;
+  maxMsgSize?: number;
+  msgRetentionSeconds?: number;
+  rewindSeconds?: number;
+  maxMsgHeapNum?: number;
+}
+
+export interface QueueMessage {
+  queueName: string;
+  msgBody: any;
+  delaySeconds: number;
+}
+
+export class Queue {
+  private queueName: string;
+  private cmqClient: CMQClient;
+  private encoding: boolean;
+
+  constructor(queueName: string, cmqClient: CMQClient, encoding = false) {
+    this.queueName = queueName;
+    this.cmqClient = cmqClient;
+    this.encoding = encoding;
+  }
+
+  public setEncoding(encodeing = false) {
+    this.encoding = encodeing;
+  }
+
+  public create(queueMeta: QueueMeta) {
+    const params = {
+      queueName: this.queueName,
+      pollingWaitSeconds: queueMeta.pollingWaitSeconds,
+      visibilityTimeout: queueMeta.visibilityTimeout,
+      maxMsgSize: queueMeta.maxMsgSize,
+      msgRetentionSeconds: queueMeta.msgRetentionSeconds,
+      rewindSeconds: queueMeta.rewindSeconds
+    };
+    if (queueMeta.maxMsgHeapNum != null && queueMeta.maxMsgHeapNum > 0) {
+      params['maxMsgHeapNum'] = queueMeta.maxMsgHeapNum;
+    }
+    this.cmqClient.createQueue(params);
+  }
+
+  public sendMessage(msg: any, delaySeconds = 0) {
+    const msgBody = this.encoding ? new Buffer(JSON.stringify(msg)).toString('base64') : msg;
+    const params: QueueMessage = {
+      queueName: this.queueName,
+      msgBody,
+      delaySeconds,
+    };
+    return this.cmqClient.sendMessage(params);
+  }
+}
