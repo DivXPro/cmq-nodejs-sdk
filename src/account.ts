@@ -10,7 +10,7 @@ export class Account {
     this.host = host;
     this.secretId = secretId;
     this.secretKey = secretKey;
-    this.cmqClient = new CMQClient(host, secretId, secretKey);
+    this.cmqClient = new CMQClient(this.host, secretId, secretKey);
   }
 
   /**

@@ -14,8 +14,8 @@ export class CMQClient {
   private secretKey: string;
   private version: string;
   private http: AxiosInstance;
-  private method: string;
-  private SignatureMethod: string;
+  private method: string = 'POST';
+  private SignatureMethod: string = 'HmacSHA1';
 
   constructor(
     host: string,
@@ -72,10 +72,10 @@ export class CMQClient {
     params['SecretId'] = this.secretId;
     params['Nonce'] = Math.random();
     params['Timestamp'] = new Date().getTime();
-    params['SignatureatureMethod'] = this.SignatureMethod;
+    params['SignatureMethod'] = this.SignatureMethod;
     // 添加签名
     const plainText = Signature.makeSignPlainText(params, method, host, path);
-    params['Signatureature'] = Signature.sign(plainText, this.secretKey, this.SignatureMethod);
+    params['Signature'] = Signature.sign(plainText, this.secretKey, this.SignatureMethod);
     return params;
   }
 

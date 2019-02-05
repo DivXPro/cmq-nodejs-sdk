@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 
 export class Signature {
   public static makeSignPlainText(
@@ -39,7 +39,7 @@ export class Signature {
       if (key === 'Signature') {
         continue;
       }
-      if (method == 'POST' && params[key].substr(0, 1) === '@') {
+      if (method == 'POST' && typeof params[key] === 'string' && params[key].substr(0, 1) === '@') {
         continue;
       }
       if (/_/.test(key)) {

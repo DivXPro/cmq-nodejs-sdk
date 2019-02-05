@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const crypto_1 = require("crypto");
+const crypto = require("crypto");
 class Signature {
     static makeSignPlainText(params, method = 'POST', host, path) {
         const url = `${host}${path}`;
@@ -12,12 +12,12 @@ class Signature {
         let signer;
         switch (signMethod) {
             case 'HmacSHA1':
-                signer = crypto_1.default.createSign('SHA1');
+                signer = crypto.createSign('SHA1');
                 signer.update(text);
                 signature = new Buffer(signer.sign(secretKey)).toString('base64');
                 break;
             case 'HmacSHA256':
-                signer = crypto_1.default.createSign('SHA256');
+                signer = crypto.createSign('SHA256');
                 signer.update(text);
                 signature = new Buffer(signer.sign(secretKey)).toString('base64');
                 break;
@@ -33,7 +33,7 @@ class Signature {
             if (key === 'Signature') {
                 continue;
             }
-            if (method == 'POST' && params[key].substr(0, 1) === '@') {
+            if (method == 'POST' && typeof params[key] === 'string' && params[key].substr(0, 1) === '@') {
                 continue;
             }
             if (/_/.test(key)) {

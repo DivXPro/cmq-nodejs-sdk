@@ -7,7 +7,7 @@ class Account {
         this.host = host;
         this.secretId = secretId;
         this.secretKey = secretKey;
-        this.cmqClient = new cmqClient_1.CMQClient(host, secretId, secretKey);
+        this.cmqClient = new cmqClient_1.CMQClient(this.host, secretId, secretKey);
     }
     setSignMethod(signMethod) {
         this.cmqClient.setSignatureMethod(signMethod);

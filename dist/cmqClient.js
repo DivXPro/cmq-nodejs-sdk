@@ -17,6 +17,8 @@ const DELETE_MESSAGE = 'DeleteMessage';
 const CREATE_QUEUE = 'CreateQueue';
 class CMQClient {
     constructor(host, secretId, secretKey, version = 'CMQ_NODEJS_SDK_1.3', method = 'POST') {
+        this.method = 'POST';
+        this.SignatureMethod = 'HmacSHA1';
         this.host = host;
         this.secretId = secretId;
         this.secretKey = secretKey;
@@ -62,9 +64,9 @@ class CMQClient {
         params['SecretId'] = this.secretId;
         params['Nonce'] = Math.random();
         params['Timestamp'] = new Date().getTime();
-        params['SignatureatureMethod'] = this.SignatureMethod;
+        params['SignatureMethod'] = this.SignatureMethod;
         const plainText = sign_1.Signature.makeSignPlainText(params, method, host, path);
-        params['Signatureature'] = sign_1.Signature.sign(plainText, this.secretKey, this.SignatureMethod);
+        params['Signature'] = sign_1.Signature.sign(plainText, this.secretKey, this.SignatureMethod);
         return params;
     }
     createQueue(params) {
