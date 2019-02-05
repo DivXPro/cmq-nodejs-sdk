@@ -15,6 +15,19 @@ export interface QueueMessage {
   delaySeconds: number;
 }
 
+export interface ReveiveMessage {
+  code: number;
+  message: string;
+  requestId: string;
+  msgBody: any;
+  msgId: string;
+  receiptHandle: string;
+  enqueueTime: number;
+  firstDequeueTime: number;
+  nextVisibleTime: number;
+  dequeueCount: number;
+}
+
 export class Queue {
   private queueName: string;
   private cmqClient: CMQClient;
@@ -50,8 +63,30 @@ export class Queue {
     const params: QueueMessage = {
       queueName: this.queueName,
       msgBody,
-      delaySeconds,
+      delaySeconds
     };
     return this.cmqClient.sendMessage(params);
+  }
+
+  public async receiveMessage(pollingWaitSeconds?: number) {
+    const params = {
+      queueName: this.queueName
+    };
+    if (pollingWaitSeconds != null) {
+      params['UserpollingWaitSeconds'] = pollingWaitSeconds;
+      params['pollingWaitSeconds'] = pollingWaitSeconds;
+    } else {
+      params['UserpollingWaitSeconds'] = 30;
+    }
+    const receiveMsg: ReveiveMessage = await this.cmqClient.receiveMessage(params);
+    if (this.encoding) {
+      receiveMsg.msgBody = new Buffer(receiveMsg.msgBody, 'base64').toString();
+    }
+    return receiveMsg;
+  }
+
+  public deleteMessage(receiptHandle: string) {
+    const params = { queueName: this.queueName, receiptHandle };
+    return this.cmqClient.deleteMessage(params);
   }
 }

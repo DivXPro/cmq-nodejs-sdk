@@ -1,4 +1,5 @@
 import { CMQClient } from './cmqClient';
+import { Queue } from './queue';
 export class Account {
   private host: string;
   private secretId: string;
@@ -27,7 +28,9 @@ export class Account {
     return this.cmqClient;
   }
 
-  public getQueue() {}
+  public getQueue(queueName: string) {
+    return new Queue(queueName, this.cmqClient);
+  }
 
   public listQueue() {}
 
