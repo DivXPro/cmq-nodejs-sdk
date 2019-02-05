@@ -11,6 +11,7 @@ const CREATE_QUEUE = 'CreateQueue';
 
 export class CMQClient {
   private host: string;
+  private region: string;
   private secretId: string;
   private secretKey: string;
   private version: string;
@@ -20,6 +21,7 @@ export class CMQClient {
 
   constructor(
     host: string,
+    region: string,
     secretId: string,
     secretKey: string,
     version = 'CMQ_NODEJS_SDK_1.3',
@@ -30,6 +32,7 @@ export class CMQClient {
     this.secretKey = secretKey;
     this.version = version;
     this.method = method;
+    this.region = region;
     this.http = AxiosStatic.create({
       baseURL: host,
       headers:
@@ -71,6 +74,7 @@ export class CMQClient {
     params['Action'] = action;
     params['RequestClient'] = this.version;
     params['SecretId'] = this.secretId;
+    params['Region'] = this.region;
     params['Nonce'] = Math.round(Math.random() * Math.pow(10, 5));
     params['Timestamp'] = Math.round(new Date().getTime() / 1000);
     params['SignatureMethod'] = this.SignatureMethod;
