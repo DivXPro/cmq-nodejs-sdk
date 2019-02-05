@@ -73,10 +73,9 @@ export class Queue {
       queueName: this.queueName
     };
     if (pollingWaitSeconds != null) {
-      params['UserpollingWaitSeconds'] = pollingWaitSeconds;
       params['pollingWaitSeconds'] = pollingWaitSeconds;
     } else {
-      params['UserpollingWaitSeconds'] = 30;
+      params['pollingWaitSeconds'] = 30;
     }
     const receiveMsg: ReveiveMessage = await this.cmqClient.receiveMessage(params);
     if (this.encoding) {
