@@ -1,14 +1,13 @@
 import { QueueMeta } from './queue';
 export declare class CMQClient {
     private host;
-    private region;
     private secretId;
     private secretKey;
     private version;
     private http;
     private method;
     private SignatureMethod;
-    constructor(host: string, region: string, secretId: string, secretKey: string, version?: string, method?: string);
+    constructor(host: string, secretId: string, secretKey: string, version?: string, method?: string);
     setSignatureMethod(SignatureMethod: string): void;
     protected request(action: string, params: any): Promise<import("axios").AxiosResponse<any>>;
     private buildParams;

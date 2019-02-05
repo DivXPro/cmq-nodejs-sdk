@@ -17,7 +17,7 @@ const RECEIVE_MESSAGE = 'ReceiveMessage';
 const DELETE_MESSAGE = 'DeleteMessage';
 const CREATE_QUEUE = 'CreateQueue';
 class CMQClient {
-    constructor(host, region, secretId, secretKey, version = 'CMQ_NODEJS_SDK_1.3', method = 'POST') {
+    constructor(host, secretId, secretKey, version = 'CMQ_NODEJS_SDK_1.3', method = 'POST') {
         this.method = 'POST';
         this.SignatureMethod = 'HmacSHA1';
         this.host = host;
@@ -25,7 +25,6 @@ class CMQClient {
         this.secretKey = secretKey;
         this.version = version;
         this.method = method;
-        this.region = region;
         this.http = axios_1.default.create({
             baseURL: host,
             headers: method === 'POST'
@@ -64,7 +63,6 @@ class CMQClient {
         params['Action'] = action;
         params['RequestClient'] = this.version;
         params['SecretId'] = this.secretId;
-        params['Region'] = this.region;
         params['Nonce'] = Math.round(Math.random() * Math.pow(10, 5));
         params['Timestamp'] = Math.round(new Date().getTime() / 1000);
         params['SignatureMethod'] = this.SignatureMethod;

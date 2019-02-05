@@ -12,7 +12,7 @@ export class Signature {
     return `${method}${url}${paramStr}`;
   }
 
-  public static sign(text, secretKey: string, signMethod = 'HmacSHA1') {
+  public static sign(text: string, secretKey: string, signMethod = 'HmacSHA1') {
     let signer: crypto.Hmac;
     switch (signMethod) {
       case 'HmacSHA1':
