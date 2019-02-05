@@ -2,17 +2,15 @@ import { CMQClient } from './cmqClient';
 import { Queue } from './queue';
 export class Account {
   private host: string;
-  private region: string;
   private secretId: string;
   private secretKey: string;
   private cmqClient: CMQClient;
 
-  constructor(host: string, region: string, secretId: string, secretKey: string) {
+  constructor(host: string, secretId: string, secretKey: string) {
     this.host = host;
-    this.region = region;
     this.secretId = secretId;
     this.secretKey = secretKey;
-    this.cmqClient = new CMQClient(this.host, this.region, secretId, secretKey);
+    this.cmqClient = new CMQClient(this.host, secretId, secretKey);
   }
 
   /**

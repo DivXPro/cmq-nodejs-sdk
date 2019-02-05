@@ -31,7 +31,18 @@ export class Signature {
   private static makeParamStr(params: { [key: string]: string }, method = 'POST') {
     let paramStr = '';
     let idx = 0;
+    let paramsKeys: string[] = [];
     for (let key in params) {
+      if (key === 'Signature') {
+        continue;
+      }
+      if (method == 'POST' && typeof params[key] === 'string' && params[key].substr(0, 1) === '@') {
+        continue;
+      }
+      paramsKeys.push(key);
+    }
+    paramsKeys = paramsKeys.sort();
+    for (let key in paramsKeys) {
       if (key === 'Signature') {
         continue;
       }

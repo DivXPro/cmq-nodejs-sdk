@@ -3,12 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cmqClient_1 = require("./cmqClient");
 const queue_1 = require("./queue");
 class Account {
-    constructor(host, region, secretId, secretKey) {
+    constructor(host, secretId, secretKey) {
         this.host = host;
-        this.region = region;
         this.secretId = secretId;
         this.secretKey = secretKey;
-        this.cmqClient = new cmqClient_1.CMQClient(this.host, this.region, secretId, secretKey);
+        this.cmqClient = new cmqClient_1.CMQClient(this.host, secretId, secretKey);
     }
     setSignMethod(signMethod) {
         this.cmqClient.setSignatureMethod(signMethod);
