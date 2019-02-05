@@ -1,7 +1,7 @@
 {
   "name": "cmq-nodejs-sdk",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tencent cloud cmq sdk of nodejs",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -18,7 +18,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0"
   },
