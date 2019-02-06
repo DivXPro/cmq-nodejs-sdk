@@ -28,8 +28,8 @@ export class Account {
     return this.cmqClient;
   }
 
-  public getQueue(queueName: string) {
-    return new Queue(queueName, this.cmqClient);
+  public getQueue(queueName: string, encoding = false) {
+    return new Queue(queueName, this.cmqClient, encoding);
   }
 
   public listQueue() {}

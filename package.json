@@ -1,6 +1,6 @@
 {
   "name": "cmq-nodejs-sdk",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Tencent cloud cmq sdk of nodejs",
   "main": "dist/index.js",
   "scripts": {
@@ -19,6 +19,12 @@
   },
   "author": "",
   "license": "MIT",
+  "homepage": "https://github.com/DivXPro/cmq-nodejs-sdk",
+  "keywords": ["Tencent", "CMQ", "SDK"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DivXPro/cmq-nodejs-sdk"
+  },
   "dependencies": {
     "axios": "^0.18.0"
   },
