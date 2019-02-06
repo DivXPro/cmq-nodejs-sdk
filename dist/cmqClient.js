@@ -13,6 +13,7 @@ const axios_1 = require("axios");
 const sign_1 = require("./sign");
 const PATH = '/v2/index.php';
 const SEND_MESSAGE = 'SendMessage';
+const BATCH_SEND_MESSAGE = 'BatchSendMessage';
 const RECEIVE_MESSAGE = 'ReceiveMessage';
 const DELETE_MESSAGE = 'DeleteMessage';
 const CREATE_QUEUE = 'CreateQueue';
@@ -76,6 +77,12 @@ class CMQClient {
     sendMessage(params) {
         return __awaiter(this, void 0, void 0, function* () {
             const resp = yield this.request(SEND_MESSAGE, params);
+            return resp.data;
+        });
+    }
+    batchSendMessage(params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const resp = yield this.request(BATCH_SEND_MESSAGE, params);
             return resp.data;
         });
     }

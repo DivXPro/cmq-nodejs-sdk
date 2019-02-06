@@ -15,6 +15,7 @@ export declare class CMQClient {
         queueName: string;
     }): Promise<import("axios").AxiosResponse<any>>;
     sendMessage(params: any): Promise<any>;
+    batchSendMessage(params: any): Promise<any>;
     receiveMessage(params: any): Promise<any>;
     deleteMessage(params: any): Promise<any>;
 }

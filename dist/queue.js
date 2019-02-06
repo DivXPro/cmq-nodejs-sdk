@@ -40,6 +40,19 @@ class Queue {
         };
         return this.cmqClient.sendMessage(params);
     }
+    batchSendMessage(msgs, delaySeconds = 0) {
+        const params = {
+            queueName: this.queueName,
+            delaySeconds,
+        };
+        let idx = 1;
+        for (const msg of msgs) {
+            const key = `msgBody.${idx}`;
+            params[key] = this.encoding ? new Buffer(JSON.stringify(msg)).toString('base64') : msg;
+            idx += 1;
+        }
+        return this.cmqClient.batchSendMessage(params);
+    }
     receiveMessage(pollingWaitSeconds) {
         return __awaiter(this, void 0, void 0, function* () {
             const params = {

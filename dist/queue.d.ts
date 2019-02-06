@@ -9,7 +9,7 @@ export interface QueueMeta {
 }
 export interface QueueMessage {
     queueName: string;
-    msgBody: any;
+    msgBody?: any;
     delaySeconds: number;
 }
 export interface ReveiveMessage {
@@ -32,6 +32,7 @@ export declare class Queue {
     setEncoding(encodeing?: boolean): void;
     create(queueMeta: QueueMeta): void;
     sendMessage(msg: any, delaySeconds?: number): Promise<any>;
+    batchSendMessage(msgs: any[], delaySeconds?: number): Promise<any>;
     receiveMessage(pollingWaitSeconds?: number): Promise<ReveiveMessage>;
     deleteMessage(receiptHandle: string): Promise<any>;
 }
