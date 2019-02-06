@@ -11,7 +11,7 @@ export interface QueueMeta {
 
 export interface QueueMessage {
   queueName: string;
-  msgBody: any;
+  msgBody?: any;
   delaySeconds: number;
 }
 
@@ -66,6 +66,20 @@ export class Queue {
       delaySeconds
     };
     return this.cmqClient.sendMessage(params);
+  }
+
+  public batchSendMessage(msgs: any[], delaySeconds = 0) {
+    const params = {
+      queueName: this.queueName,
+      delaySeconds,
+    };
+    let idx = 1;
+    for (const msg of msgs) {
+      const key = `msgBody.${idx}`;
+      params[key] = this.encoding ? new Buffer(JSON.stringify(msg)).toString('base64') : msg;
+      idx += 1;
+    }
+    return this.cmqClient.batchSendMessage(params);
   }
 
   public async receiveMessage(pollingWaitSeconds?: number) {

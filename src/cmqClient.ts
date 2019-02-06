@@ -5,6 +5,7 @@ import { QueueMeta } from './queue';
 
 const PATH = '/v2/index.php';
 const SEND_MESSAGE = 'SendMessage';
+const BATCH_SEND_MESSAGE = 'BatchSendMessage';
 const RECEIVE_MESSAGE = 'ReceiveMessage';
 const DELETE_MESSAGE = 'DeleteMessage';
 const CREATE_QUEUE = 'CreateQueue';
@@ -87,6 +88,11 @@ export class CMQClient {
 
   public async sendMessage(params: any) {
     const resp = await this.request(SEND_MESSAGE, params);
+    return resp.data;
+  }
+
+  public async batchSendMessage(params: any) {
+    const resp = await this.request(BATCH_SEND_MESSAGE, params);
     return resp.data;
   }
 
