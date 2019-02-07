@@ -12,14 +12,14 @@ class Account {
     setSignMethod(signMethod) {
         this.cmqClient.setSignatureMethod(signMethod);
     }
-    setClient(host, region, secretId, secretKey) {
-        this.cmqClient = new cmqClient_1.CMQClient(host, region, secretId || this.secretId, secretKey || this.secretKey);
+    setClient(host, secretId, secretKey) {
+        this.cmqClient = new cmqClient_1.CMQClient(host, secretId || this.secretId, secretKey || this.secretKey);
     }
     getClient() {
         return this.cmqClient;
     }
-    getQueue(queueName) {
-        return new queue_1.Queue(queueName, this.cmqClient);
+    getQueue(queueName, encoding = false) {
+        return new queue_1.Queue(queueName, this.cmqClient, encoding);
     }
     listQueue() { }
     listTopic() { }

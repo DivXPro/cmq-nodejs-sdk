@@ -20,8 +20,8 @@ export class Account {
     this.cmqClient.setSignatureMethod(signMethod);
   }
 
-  public setClient(host: string, region: string, secretId?: string, secretKey?: string) {
-    this.cmqClient = new CMQClient(host, region, secretId || this.secretId, secretKey || this.secretKey);
+  public setClient(host: string, secretId?: string, secretKey?: string) {
+    this.cmqClient = new CMQClient(host, secretId || this.secretId, secretKey || this.secretKey);
   }
 
   public getClient() {
